@@ -14,7 +14,11 @@ Run the full pipeline with:
 
 ```
 /devteam <what you want built or fixed>
+/devteam --budget low|normal|high <task>    # trade depth for token usage (default: normal)
 ```
+
+Budgets change models and the number of review/fix rounds. The security gate always runs.
+Check remaining plan usage with `/usage` before big runs.
 
 Or call one agent directly: "Use the security-reviewer agent to audit src/api/."
 

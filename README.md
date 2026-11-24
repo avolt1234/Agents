@@ -124,6 +124,32 @@ Full pipeline:
 /devteam Add a /health endpoint that returns build version and uptime
 ```
 
+### Budget modes (control token usage)
+
+Add `--budget low|normal|high` to trade depth for token usage. Default is `normal`.
+
+```
+/devteam --budget low Fix the typo in the signup error message
+/devteam Add a /health endpoint                          # normal
+/devteam --budget high Add OAuth login with Google
+```
+
+| | low | normal | high |
+|---|---|---|---|
+| senior-dev / security-reviewer | sonnet / sonnet | opus / opus | opus / opus |
+| juniors / tester | haiku* / haiku* | sonnet / sonnet | opus / opus |
+| Juniors in parallel | no (usually one) | yes | yes |
+| Review / security / test rounds | 1 / 1 / 1 | 2 / 2 / 2 | 3 / 3 / 3 |
+| Security gate | **always** | **always** | **always** |
+
+\* Work the senior dev marks *security-sensitive* (auth, crypto, secrets, payments, personal
+data, file/OS access, untrusted-input parsing) always uses at least sonnet.
+
+The agents can't see how much of your plan's usage allowance is left. Check it yourself with
+`/usage` (subscription plans) or `/cost` (API billing) and choose the budget to match:
+`low` when you're near your limit or for small changes, `high` for large or high-risk work.
+Haiku is the fastest and cheapest model, but it is less capable, so check its output more carefully.
+
 Single agent:
 ```
 Use the security-reviewer agent to audit the whole src/auth folder.
@@ -138,7 +164,8 @@ Use the tester agent to write tests for src/utils/date.ts.
 - **Guardrails:** add deny/ask rules in `.claude/settings.json`.
 - **Team size:** copy `junior-dev-2.md` to `junior-dev-3.md`, change `name:`, and add
   "Work package C" to `senior-dev.md` and `devteam.md`.
-- **Loop limits:** change "Maximum 2" in `.claude/commands/devteam.md`.
+- **Budget profiles / loop limits:** edit the "Budget profiles" table in
+  `.claude/commands/devteam.md` (models, parallelism, max rounds per budget).
 
 ## Notes
 - Subagents can't call each other. The main Claude session acts as the orchestrator
