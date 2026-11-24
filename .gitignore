@@ -1,0 +1,19 @@
+# Personal Claude Code settings (never share)
+.claude/settings.local.json
+.claude/settings.json.bak
+.claude/worktrees/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
